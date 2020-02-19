@@ -1,27 +1,30 @@
 ﻿using System.Collections.Generic;
+using Autofac;
 
 namespace ConstructionLine.CodingChallenge
 {
     public class SearchEngine
     {
-        private readonly List<Shirt> _shirts;
+        private readonly ISearchEngineInternal _searchInternal;
 
         public SearchEngine(List<Shirt> shirts)
         {
-            _shirts = shirts;
+            var builder = new ContainerBuilder();
 
-            // TODO: data preparation and initialisation of additional data structures to improve performance goes here.
+            builder.RegisterInstance(new SearchFilter(shirts)).As<ISearchFilter>();
+            builder.RegisterType<SearchBuilder>().As<ISearchBuilder>();
+            builder.RegisterType<SearchFormatter>().As<ISearchFormatter>();
 
+            var container = builder.Build();
+
+            _searchInternal = new SearchEngineInternal(container.Resolve<ISearchFilter>(),
+                                                          container.Resolve<ISearchBuilder>(),
+                                                          container.Resolve<ISearchFormatter>());
         }
-
 
         public SearchResults Search(SearchOptions options)
         {
-            // TODO: search logic goes here.
-
-            return new SearchResults
-            {
-            };
+            return _searchInternal.Search(options);
         }
     }
 }

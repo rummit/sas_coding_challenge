@@ -1,0 +1,16 @@
+Visual Studio 2019 used for development
+
+-SearchEngine.cs Modifications
+  To demonstrate Dependency Injection, Autofac NuGet is used 
+
+- Builder design pattern used to form the SearchResults
+
+- SearchEngineTests.cs
+  Line 31, 32: Instead of "shirts" , "results.Shirts" passed into the AssertSizeCounts() and AssertColorCounts() methods
+  This is done so that the tests are checking conditions as mentioned in the README 
+
+  - SearchEnginePerformanceTests.cs
+  Line 44, 45: Instead of "shirts" , "results.Shirts" passed into the AssertSizeCounts() and AssertColorCounts() methods
+  This is done so that the tests are checking conditions as mentioned in the README 
+
+  - For new unit tests, Moq and Xunit NuGets are used.
